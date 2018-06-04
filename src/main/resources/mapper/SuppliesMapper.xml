@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.graduate.dao.SuppliesMapper" >
+  <resultMap id="BaseResultMap" type="com.graduate.model.Supplies" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="hc_no" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="hc_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="manafacturer" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="hc_type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="unit" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="modified_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, hc_no, hc_name, manafacturer, hc_type, unit, price, status, create_time, modified_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.graduate.model.SuppliesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from supplies
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from supplies
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from supplies
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.graduate.model.SuppliesExample" >
+    delete from supplies
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.graduate.model.Supplies" >
+    insert into supplies (id, hc_no, hc_name, 
+      manafacturer, hc_type, unit, 
+      price, status, create_time, 
+      modified_time)
+    values (#{id,jdbcType=BIGINT}, #{hcNo,jdbcType=VARCHAR}, #{hcName,jdbcType=VARCHAR}, 
+      #{manafacturer,jdbcType=VARCHAR}, #{hcType,jdbcType=TINYINT}, #{unit,jdbcType=TINYINT}, 
+      #{price,jdbcType=DECIMAL}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifiedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.graduate.model.Supplies" >
+    insert into supplies
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hcNo != null" >
+        hc_no,
+      </if>
+      <if test="hcName != null" >
+        hc_name,
+      </if>
+      <if test="manafacturer != null" >
+        manafacturer,
+      </if>
+      <if test="hcType != null" >
+        hc_type,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifiedTime != null" >
+        modified_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hcNo != null" >
+        #{hcNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hcName != null" >
+        #{hcName,jdbcType=VARCHAR},
+      </if>
+      <if test="manafacturer != null" >
+        #{manafacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="hcType != null" >
+        #{hcType,jdbcType=TINYINT},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=TINYINT},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.graduate.model.SuppliesExample" resultType="java.lang.Integer" >
+    select count(*) from supplies
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update supplies
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.hcNo != null" >
+        hc_no = #{record.hcNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hcName != null" >
+        hc_name = #{record.hcName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manafacturer != null" >
+        manafacturer = #{record.manafacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hcType != null" >
+        hc_type = #{record.hcType,jdbcType=TINYINT},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=TINYINT},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedTime != null" >
+        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update supplies
+    set id = #{record.id,jdbcType=BIGINT},
+      hc_no = #{record.hcNo,jdbcType=VARCHAR},
+      hc_name = #{record.hcName,jdbcType=VARCHAR},
+      manafacturer = #{record.manafacturer,jdbcType=VARCHAR},
+      hc_type = #{record.hcType,jdbcType=TINYINT},
+      unit = #{record.unit,jdbcType=TINYINT},
+      price = #{record.price,jdbcType=DECIMAL},
+      status = #{record.status,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.graduate.model.Supplies" >
+    update supplies
+    <set >
+      <if test="hcNo != null" >
+        hc_no = #{hcNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hcName != null" >
+        hc_name = #{hcName,jdbcType=VARCHAR},
+      </if>
+      <if test="manafacturer != null" >
+        manafacturer = #{manafacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="hcType != null" >
+        hc_type = #{hcType,jdbcType=TINYINT},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=TINYINT},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null" >
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.graduate.model.Supplies" >
+    update supplies
+    set hc_no = #{hcNo,jdbcType=VARCHAR},
+      hc_name = #{hcName,jdbcType=VARCHAR},
+      manafacturer = #{manafacturer,jdbcType=VARCHAR},
+      hc_type = #{hcType,jdbcType=TINYINT},
+      unit = #{unit,jdbcType=TINYINT},
+      price = #{price,jdbcType=DECIMAL},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

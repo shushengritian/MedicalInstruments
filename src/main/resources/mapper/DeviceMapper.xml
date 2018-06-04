@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.graduate.dao.DeviceMapper" >
+  <resultMap id="BaseResultMap" type="com.graduate.model.Device" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="device_no" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="device_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="unit" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="device_type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="is_measurement" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="modified_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, device_no, device_name, unit, device_type, is_measurement, status, create_time, 
+    modified_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.graduate.model.DeviceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from device
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from device
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from device
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.graduate.model.DeviceExample" >
+    delete from device
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.graduate.model.Device" >
+    insert into device (id, device_no, device_name, 
+      unit, device_type, is_measurement, 
+      status, create_time, modified_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{deviceNo,jdbcType=VARCHAR}, #{deviceName,jdbcType=VARCHAR}, 
+      #{unit,jdbcType=TINYINT}, #{deviceType,jdbcType=TINYINT}, #{isMeasurement,jdbcType=TINYINT}, 
+      #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.graduate.model.Device" >
+    insert into device
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="deviceNo != null" >
+        device_no,
+      </if>
+      <if test="deviceName != null" >
+        device_name,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="deviceType != null" >
+        device_type,
+      </if>
+      <if test="isMeasurement != null" >
+        is_measurement,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifiedTime != null" >
+        modified_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="deviceNo != null" >
+        #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceName != null" >
+        #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=TINYINT},
+      </if>
+      <if test="deviceType != null" >
+        #{deviceType,jdbcType=TINYINT},
+      </if>
+      <if test="isMeasurement != null" >
+        #{isMeasurement,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.graduate.model.DeviceExample" resultType="java.lang.Integer" >
+    select count(*) from device
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update device
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.deviceNo != null" >
+        device_no = #{record.deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceName != null" >
+        device_name = #{record.deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=TINYINT},
+      </if>
+      <if test="record.deviceType != null" >
+        device_type = #{record.deviceType,jdbcType=TINYINT},
+      </if>
+      <if test="record.isMeasurement != null" >
+        is_measurement = #{record.isMeasurement,jdbcType=TINYINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedTime != null" >
+        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update device
+    set id = #{record.id,jdbcType=BIGINT},
+      device_no = #{record.deviceNo,jdbcType=VARCHAR},
+      device_name = #{record.deviceName,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=TINYINT},
+      device_type = #{record.deviceType,jdbcType=TINYINT},
+      is_measurement = #{record.isMeasurement,jdbcType=TINYINT},
+      status = #{record.status,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.graduate.model.Device" >
+    update device
+    <set >
+      <if test="deviceNo != null" >
+        device_no = #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceName != null" >
+        device_name = #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=TINYINT},
+      </if>
+      <if test="deviceType != null" >
+        device_type = #{deviceType,jdbcType=TINYINT},
+      </if>
+      <if test="isMeasurement != null" >
+        is_measurement = #{isMeasurement,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null" >
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.graduate.model.Device" >
+    update device
+    set device_no = #{deviceNo,jdbcType=VARCHAR},
+      device_name = #{deviceName,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=TINYINT},
+      device_type = #{deviceType,jdbcType=TINYINT},
+      is_measurement = #{isMeasurement,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
