@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为HomeServiceImpl接口方法提供sql语句配置 -->
+<mapper namespace="com.graduate.dao.HomeMapper">
+    <select id="listDataDictionary" parameterType="java.util.Map" resultType="com.graduate.model.DataDictionary">
+        select id,column_name as columnName, inside_value as insideValue, exterior_value as exteriorValue from public_dictionary
+        where 1=1
+        <if test="map.id != null"> and id=#{map.id}</if>
+        <if test="map.columnName != null"> and column_name=#{map.columnName}</if>
+        <if test="map.insideValue != null"> and inside_value=#{map.insideValue}</if>
+        <if test="map.exteriorValue != null"> and exterior_value=#{map.exteriorValue}</if>
+        limit #{map.startIndex},#{map.pageSize}
+    </select>
+    <select id="count" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) from public_dictionary
+        where 1=1
+        <if test="map.id != null"> and id=#{map.id}</if>
+        <if test="map.columnName != null"> and column_name=#{map.columnName}</if>
+        <if test="map.insideValue != null"> and inside_value=#{map.insideValue}</if>
+        <if test="map.exteriorValue != null"> and exterior_value=#{map.exteriorValue}</if>
+    </select>
+    
+    <insert id="add" parameterType="java.util.Map">
+        insert into public_dictionary (column_name, inside_value, exterior_value, create_time, modified_time)
+        values (#{map.columnName,jdbcType=VARCHAR},#{map.insideValue,jdbcType=VARCHAR},#{map.exteriorValue,jdbcType=VARCHAR},
+                #{map.currentTime,jdbcType=TIMESTAMP},#{map.currentTime,jdbcType=TIMESTAMP})
+    </insert>
+    
+    <select id="getDataById" parameterType="java.lang.Integer" resultType="com.graduate.model.DataDictionary">
+        select id,column_name as columnName, inside_value as insideValue, exterior_value as exteriorValue
+           from public_dictionary where id = #{id}
+    </select>
+
+    <update id="editDataById" parameterType="java.util.Map">
+        update public_dictionary set column_name = #{map.columnName,jdbcType=VARCHAR}, inside_value = #{map.insideValue,jdbcType=VARCHAR},
+             exterior_value = #{map.exteriorValue,jdbcType=VARCHAR}, modified_tome = #{map.currentTime,jdbcType=TIMESTAMP}
+        where id = #{map.id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="delById" parameterType="java.lang.Integer" >
+        delete from public_dictionary where id = #{id}
+    </delete>
+</mapper>
