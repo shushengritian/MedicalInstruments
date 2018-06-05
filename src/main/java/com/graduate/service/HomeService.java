@@ -9,9 +9,6 @@ import net.sf.json.JSONObject;
 public interface HomeService {
     /**
      * 获取数据字典数据
-     *
-     *
-     *
      * */
     JSONObject listDateDictionary(String id, String columnName, String insideValue, String exteriorValue, String pageNo, String pageSize);
 

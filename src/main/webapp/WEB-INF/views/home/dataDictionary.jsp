@@ -34,7 +34,7 @@
                 <i class="layui-icon">&#xe615;</i></button>
             <button class="layui-btn" onclick="addBtn()"><i class="layui-icon"></i>添加</button>
         </div>
-
+    </div>
 <table id="dataDictionary" class="layui-table" lay-filter="test" >
     <thead>
         <th>ID</th>

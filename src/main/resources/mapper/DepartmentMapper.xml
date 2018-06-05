@@ -88,6 +88,18 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByMap" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from department
+    where 1=1
+    <if test="map.id != null"> and id=#{map.id}</if>
+    <if test="map.number != null"> and number=#{map.number}</if>
+    <if test="map.name != null"> and name=#{map.name}</if>
+    <if test="map.landline != null"> and landline=#{map.landline}</if>
+    <if test="map.status != null"> and status=#{map.status}</if>
+    limit #{map.startIndex},#{map.pageSize}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
@@ -166,6 +178,15 @@
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
+  </select>
+  <select id="countByMap" parameterType="java.util.Map" resultType="java.lang.Integer" >
+    select count(*) from department
+    where 1=1
+    <if test="map.id != null"> and id=#{map.id}</if>
+    <if test="map.number != null"> and number=#{map.number}</if>
+    <if test="map.name != null"> and name=#{map.name}</if>
+    <if test="map.landline != null"> and landline=#{map.landline}</if>
+    <if test="map.status != null"> and status=#{map.status}</if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update department

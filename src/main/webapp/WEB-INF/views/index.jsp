@@ -39,7 +39,7 @@
             <li class="layui-nav-item level-nav">
                 <a href="#">基础设置</a>
             </li>
-            <li class="layui-nav-item level-nav">
+            <%--<li class="layui-nav-item level-nav">
                 <a href="javascript:;">其它系统</a>
                 <dl class="layui-nav-child">
                     <dd>
@@ -52,7 +52,7 @@
                         <a href="#">授权管理</a>
                     </dd>
                 </dl>
-            </li>
+            </li>--%>
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
@@ -70,7 +70,7 @@
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a href="">退出</a>
+                <a href="/login.jsp">退出</a>
             </li>
         </ul>
     </div>
@@ -149,7 +149,7 @@
             </ul>
             <ul class="layui-nav layui-nav-tree" style="display: none" lay-filter="test">
                 <li class="layui-nav-item">
-                    <a class="hp-tab-add" hp-href="" href="javascript:;">科室管理</a>
+                    <a class="hp-tab-add" hp-href="/department/department" href="javascript:;">科室管理</a>
                 </li>
                 <li class="layui-nav-item">
                     <a class="hp-tab-add" hp-href="" href="javascript:;">设备维护</a>
