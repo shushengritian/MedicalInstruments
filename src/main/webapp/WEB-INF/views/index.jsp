@@ -152,7 +152,7 @@
                     <a class="hp-tab-add" hp-href="/department/department" href="javascript:;">科室管理</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="hp-tab-add" hp-href="" href="javascript:;">设备维护</a>
+                    <a class="hp-tab-add" hp-href="/device/device" href="javascript:;">设备维护</a>
                 </li>
                 <li class="layui-nav-item">
                     <a class="hp-tab-add" hp-href="" href="javascript:;">耗材维护</a>

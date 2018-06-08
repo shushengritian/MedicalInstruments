@@ -1,6 +1,6 @@
 package com.graduate.controller;
 
-import com.graduate.service.DepartmentService;
+import com.graduate.service.DeviceService;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,83 +13,89 @@ import java.io.IOException;
 
 /**
  * @author xiyouquedongxing
- * @date 2018/6/5 16:58
+ * @date 2018/6/6 23:15
  */
 @Controller
-@RequestMapping("/department")
-public class DepartmentController {
+@RequestMapping("/device")
+public class DeviceController {
 
     @Resource
-    private DepartmentService departmentService;
+    private DeviceService deviceService;
 
-    @RequestMapping("/department")
+    @RequestMapping("/device")
     public String dataDepartment(HttpServletRequest request, HttpServletResponse response) {
-        return "/base/department";
+        return "/base/device";
     }
 
-    @RequestMapping(value = "/selectDepartment",method = {RequestMethod.POST})
-    public void selectDepartment(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+    @RequestMapping(value = "/selectDevice",method = {RequestMethod.POST})
+    public void selectDevice(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
-        String number = request.getParameter("number");
-        String name = request.getParameter("name");
-        String landline = request.getParameter("landline");
+        String deviceNo = request.getParameter("deviceNo");
+        String deviceName = request.getParameter("deviceName");
+        String deviceType = request.getParameter("deviceType");
+        String isMeasurement = request.getParameter("isMeasurement");
         String status = request.getParameter("status");
         String pageNo = request.getParameter("pageNo");
         String pageSize = request.getParameter("pageSize");
-        JSONObject result = departmentService.listDepartment(id, number, name, landline, status, pageNo, pageSize);
+        JSONObject result = deviceService.listDevice(id, deviceNo, deviceName, deviceType, isMeasurement, status, pageNo, pageSize);
         response.getWriter().write(result.toString());
         response.getWriter().flush();
         response.getWriter().close();
     }
 
     @RequestMapping(value = "/add",method = {RequestMethod.POST})
-    public void addDepartment(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void addDevice(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        String number = request.getParameter("number");
-        String name = request.getParameter("name");
-        String landline = request.getParameter("landline");
+        String deviceNo = request.getParameter("deviceNo");
+        String deviceName = request.getParameter("deviceName");
+        String unit = request.getParameter("unit");
+        String deviceType = request.getParameter("deviceType");
+        String isMeasurement = request.getParameter("isMeasurement");
         String status = request.getParameter("status");
-        JSONObject result = departmentService.add(number, name, landline, status);
+        JSONObject result = deviceService.add(deviceNo, deviceName, unit, deviceType, isMeasurement, status);
         response.getWriter().write(result.toString());
         response.getWriter().flush();
         response.getWriter().close();
     }
 
-    @RequestMapping(value = "/getDepartment",method = {RequestMethod.POST})
-    public void getDepartment(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/getDevice",method = {RequestMethod.POST})
+    public void getDevice(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
-        JSONObject result = departmentService.getDepartmentById(id);
+        JSONObject result = deviceService.getDeviceById(id);
         response.getWriter().write(result.toString());
         response.getWriter().flush();
         response.getWriter().close();
     }
 
     @RequestMapping(value = "/edit",method = {RequestMethod.POST})
-    public void editDepartment(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void editDevice(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
-        String number = request.getParameter("number");
-        String name = request.getParameter("name");
-        String landline = request.getParameter("landline");
+        String deviceNo = request.getParameter("deviceNo");
+        String deviceName = request.getParameter("deviceName");
+        String unit = request.getParameter("unit");
+        String deviceType = request.getParameter("deviceType");
+        String isMeasurement = request.getParameter("isMeasurement");
         String status = request.getParameter("status");
-        JSONObject result = departmentService.editById(id, number, name, landline, status);
+        JSONObject result = deviceService.editById(id, deviceNo, deviceName, unit, deviceType, isMeasurement, status);
         response.getWriter().write(result.toString());
         response.getWriter().flush();
         response.getWriter().close();
     }
 
     @RequestMapping(value = "/del",method = {RequestMethod.POST})
-    public void deleteDepartment(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void deleteDevice(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
-        JSONObject result = departmentService.delById(id);
+        JSONObject result = deviceService.delById(id);
         response.getWriter().write(result.toString());
         response.getWriter().flush();
         response.getWriter().close();

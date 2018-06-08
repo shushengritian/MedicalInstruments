@@ -1,7 +1,6 @@
 package com.graduate.service.impl;
 
 import com.graduate.dao.DepartmentMapper;
-import com.graduate.model.DataDictionary;
 import com.graduate.model.Department;
 import com.graduate.model.DepartmentExample;
 import com.graduate.model.DepartmentExample.Criteria;
@@ -12,7 +11,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -84,7 +82,7 @@ public class DepartmentServiceImpl implements DepartmentService {
             department.setLandline(landline);
         }
         if (StringUtils.isNotBlank(status)) {
-            department.setStatus(status.getBytes()[0]);
+            department.setStatus(Byte.parseByte(status));
         }
         department.setCreateTime(new Date());
         department.setModifiedTime(new Date());
@@ -98,4 +96,73 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
         return obj;
     }
+
+    @Override
+    public JSONObject getDepartmentById(String id) {
+        JSONObject obj = new JSONObject();
+        Map<String,Object> map = new HashMap<>(1);
+        if (StringUtils.isNotBlank(id)) {
+            map.put("id",Integer.parseInt(id));
+        }
+        List<Department> list = departmentMapper.selectByMap(map);
+        JSONObject data = JSONArray.fromObject(list).getJSONObject(0);
+        if (data.size() > 0) {
+            obj.put("code","1");
+            obj.put("msg","查询成功！");
+            obj.put("data",data);
+        } else {
+            obj.put("code","0");
+            obj.put("msg","搜索到0条记录！");
+        }
+        return obj;
+    }
+
+    @Override
+    public JSONObject editById(String id, String number, String name, String landline, String status) {
+        JSONObject obj = new JSONObject();
+        DepartmentExample example = new DepartmentExample();
+        Department department = new Department();
+        Criteria criteria = example.createCriteria();
+        if (StringUtils.isNotBlank(id)) {
+            criteria.andIdEqualTo(Long.parseLong(id));
+            department.setId(Long.parseLong(id));
+        }
+        if (StringUtils.isNotBlank(number)) {
+            department.setNumber(number);
+        }
+        if (StringUtils.isNotBlank(name)) {
+            department.setName(name);
+        }
+        if (StringUtils.isNotBlank(landline)) {
+            department.setLandline(landline);
+        }
+        if (StringUtils.isNotBlank(status)) {
+            department.setStatus(status.getBytes()[0]);
+        }
+        department.setModifiedTime(new Date());
+        int res = departmentMapper.updateByExample(department, example);
+        if (res > 0) {
+            obj.put("code","1");
+            obj.put("msg","编辑成功！");
+        } else {
+            obj.put("code","0");
+            obj.put("msg","编辑失败！");
+        }
+        return obj;
+    }
+
+    @Override
+    public JSONObject delById(String id) {
+        JSONObject obj = new JSONObject();
+        int res = departmentMapper.deleteByPrimaryKey(Long.parseLong(id));
+        if (res > 0) {
+            obj.put("code","1");
+            obj.put("msg","删除成功！");
+        } else {
+            obj.put("code","0");
+            obj.put("msg","删除失败！");
+        }
+        return obj;
+    }
+
 }

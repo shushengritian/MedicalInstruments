@@ -98,7 +98,10 @@
     <if test="map.name != null"> and name=#{map.name}</if>
     <if test="map.landline != null"> and landline=#{map.landline}</if>
     <if test="map.status != null"> and status=#{map.status}</if>
-    limit #{map.startIndex},#{map.pageSize}
+    <if test="map.startIndex != null">
+      limit #{map.startIndex},#{map.pageSize}
+    </if>
+
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 

@@ -91,6 +91,21 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByMap" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from device
+    where 1=1
+    <if test="map.id != null"> and id=#{map.id}</if>
+    <if test="map.deviceNo != null"> and device_no=#{map.deviceNo}</if>
+    <if test="map.deviceName != null"> and device_name=#{map.deviceName}</if>
+    <if test="map.deviceType != null"> and device_type=#{map.deviceType}</if>
+    <if test="map.isMeasurement != null"> and is_measurement=#{map.isMeasurement}</if>
+    <if test="map.status != null"> and status=#{map.status}</if>
+    <if test="map.startIndex != null">
+        limit #{map.startIndex},#{map.pageSize}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
@@ -183,6 +198,16 @@
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
+  </select>
+  <select id="countByMap" parameterType="java.util.Map" resultType="java.lang.Integer" >
+    select count(*) from device
+    where 1=1
+    <if test="map.id != null"> and id=#{map.id}</if>
+    <if test="map.deviceNo != null"> and device_no=#{map.deviceNo}</if>
+    <if test="map.deviceName != null"> and device_name=#{map.deviceName}</if>
+    <if test="map.deviceType != null"> and device_type=#{map.deviceType}</if>
+    <if test="map.isMeasurement != null"> and is_measurement=#{map.isMeasurement}</if>
+    <if test="map.status != null"> and status=#{map.status}</if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update device
