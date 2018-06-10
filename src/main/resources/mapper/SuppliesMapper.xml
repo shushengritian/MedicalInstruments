@@ -91,6 +91,19 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByMap" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from supplies
+    where 1=1
+    <if test="map.id != null"> and id=#{map.id}</if>
+    <if test="map.hcNo != null"> and hc_no=#{map.hcNo}</if>
+    <if test="map.hcName != null"> and hc_name=#{map.hcName}</if>
+    <if test="map.manafacturer != null"> and manafacturer=#{map.manafacturer}</if>
+    <if test="map.startIndex != null">
+      limit #{map.startIndex},#{map.pageSize}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
@@ -189,6 +202,14 @@
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
+  </select>
+  <select id="countByMap" parameterType="java.util.Map" resultType="java.lang.Integer" >
+    select count(*) from supplies
+    where 1=1
+    <if test="map.id != null"> and id=#{map.id}</if>
+    <if test="map.hcNo != null"> and hc_no=#{map.hcNo}</if>
+    <if test="map.hcName != null"> and hc_name=#{map.hcName}</if>
+    <if test="map.manafacturer != null"> and manafacturer=#{map.manafacturer}</if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update supplies
