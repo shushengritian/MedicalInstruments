@@ -12,6 +12,12 @@ public class AccessStock {
 
     private String hcNo;
 
+    private String hcName;
+
+    private Byte unit;
+
+    private BigDecimal price;
+
     private Integer number;
 
     private BigDecimal amount;
@@ -24,11 +30,14 @@ public class AccessStock {
 
     private Date modifiedTime;
 
-    public AccessStock(Long id, String singleNo, Byte sType, String hcNo, Integer number, BigDecimal amount, String validDate, Byte inOrOut, Date createTime, Date modifiedTime) {
+    public AccessStock(Long id, String singleNo, Byte sType, String hcNo, String hcName, Byte unit, BigDecimal price, Integer number, BigDecimal amount, String validDate, Byte inOrOut, Date createTime, Date modifiedTime) {
         this.id = id;
         this.singleNo = singleNo;
         this.sType = sType;
         this.hcNo = hcNo;
+        this.hcName = hcName;
+        this.unit = unit;
+        this.price = price;
         this.number = number;
         this.amount = amount;
         this.validDate = validDate;
@@ -71,6 +80,30 @@ public class AccessStock {
 
     public void setHcNo(String hcNo) {
         this.hcNo = hcNo == null ? null : hcNo.trim();
+    }
+
+    public String getHcName() {
+        return hcName;
+    }
+
+    public void setHcName(String hcName) {
+        this.hcName = hcName;
+    }
+
+    public Byte getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Byte unit) {
+        this.unit = unit;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public Integer getNumber() {

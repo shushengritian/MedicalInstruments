@@ -1,6 +1,8 @@
 package com.graduate.service.impl;
 
+import com.graduate.dao.StockMapper;
 import com.graduate.dao.SuppliesMapper;
+import com.graduate.model.Stock;
 import com.graduate.model.Supplies;
 import com.graduate.model.SuppliesExample;
 import com.graduate.model.SuppliesExample.Criteria;
@@ -27,6 +29,9 @@ public class SuppliesServiceImpl extends BaseImpl implements SuppliesService {
 
     @Resource
     private SuppliesMapper suppliesMapper;
+
+    @Resource
+    private StockMapper stockMapper;
 
     @Override
     public JSONObject listSupplies(String id, String hcNo, String hcName, String manafacturer, String pageNo,
@@ -82,6 +87,12 @@ public class SuppliesServiceImpl extends BaseImpl implements SuppliesService {
         supplies.setCreateTime(new Date());
         supplies.setModifiedTime(new Date());
         int res = suppliesMapper.insert(supplies);
+        Stock stock = new Stock();
+        stock.setNo(hcNo);
+        stock.setStock(0);
+        stock.setCreateTime(new Date());
+        stock.setModifiedTime(new Date());
+        stockMapper.insert(stock);
         return addResult(res);
     }
 

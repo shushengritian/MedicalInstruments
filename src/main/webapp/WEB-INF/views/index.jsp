@@ -109,13 +109,13 @@
             </ul>
             <ul class="layui-nav layui-nav-tree" style="display: none" lay-filter="test">
                 <li class="layui-nav-item">
-                    <a class="hp-tab-add" hp-href="" href="javascript:;">耗材入库</a>
+                    <a class="hp-tab-add" hp-href="/stock/storage" href="javascript:;">器材入库</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="hp-tab-add" hp-href="" href="javascript:;">耗材出库</a>
+                    <a class="hp-tab-add" hp-href="/stock/outStock" href="javascript:;">器材出库</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="hp-tab-add" hp-href="" href="javascript:;">耗材出入库明细</a>
+                    <a class="hp-tab-add" hp-href="/stock/accessStock" href="javascript:;">器材出入库明细</a>
                 </li>
                 <li class="layui-nav-item">
                     <a class="hp-tab-add" hp-href="" href="javascript:;">科室领用查询</a>

@@ -7,6 +7,9 @@
       <arg column="single_no" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="s_type" jdbcType="TINYINT" javaType="java.lang.Byte" />
       <arg column="hc_no" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="hc_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="unit" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
       <arg column="number" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="amount" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
       <arg column="valid_date" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -90,6 +93,17 @@
     </if>
     <if test="orderByClause != null" >
       order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select a.*, s.hc_name, s.unit, s.price from access_stock a join supplies s on a.hc_no = s.hc_no
+    where 1 = 1
+    <if test="map.hcName != null"> and s.hc_name = #{map.hcName}</if>
+    <if test="map.startDate != null"> and a.create_time &gt; #{map.startDate}</if>
+    <if test="map.endDate != null"> and a.create_time &lt; #{map.endDate}</if>
+    <if test="map.sType != null"> and a.s_type = #{map.sType}</if>
+    <if test="map.startIndex != null">
+      limit #{map.startIndex},#{map.pageSize}
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -190,6 +204,14 @@
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
+  </select>
+  <select id="countByMap" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from access_stock a join supplies s on a.hc_no = s.hc_no
+    where 1 = 1
+    <if test="map.hcName != null"> and s.hc_name = #{map.hcName}</if>
+    <if test="map.startDate != null"> and a.create_time &gt; #{map.startDate}</if>
+    <if test="map.endDate != null"> and a.create_time &lt; #{map.endDate}</if>
+    <if test="map.sType != null"> and a.s_type = #{map.sType}</if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update access_stock

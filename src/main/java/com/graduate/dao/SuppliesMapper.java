@@ -5,6 +5,7 @@ import com.graduate.model.SuppliesExample;
 import java.util.List;
 import java.util.Map;
 
+import com.graduate.model.SuppliesStock;
 import org.apache.ibatis.annotations.Param;
 
 public interface SuppliesMapper {
@@ -25,6 +26,8 @@ public interface SuppliesMapper {
     List<Supplies> selectByMap(@Param("map") Map<String,Object> map);
 
     Supplies selectByPrimaryKey(Long id);
+
+    Supplies selectByHcNo(String hcNo);
 
     int updateByExampleSelective(@Param("record") Supplies record, @Param("example") SuppliesExample example);
 

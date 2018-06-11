@@ -86,11 +86,29 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByMap" resultType="com.graduate.model.SuppliesStock" parameterType="java.util.Map">
+      select s.hc_no as hcNo, s.hc_name as hcName, n.stock, s.price, s.unit from supplies s
+      left join stock n on s.hc_no = n.no
+      where 1 = 1
+      <if test="map.hcNo != null"> and s.hc_no = #{map.hcNo} </if>
+      <if test="map.hcName != null"> and s.hc_name = #{map.hcName} </if>
+      order by s.hc_no asc
+      <if test="map.startIndex != null">
+          limit #{map.startIndex},#{map.pageSize}
+      </if>
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from stock
     where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByHcNo"  resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from stock
+    where no = #{hcNo,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from stock
@@ -150,6 +168,13 @@
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
+  </select>
+  <select id="countByMap" resultType="java.lang.Integer" parameterType="java.util.Map">
+    select count(*) from supplies s
+      left join stock n on s.hc_no = n.no
+    where 1 = 1
+    <if test="map.hcNo != null"> and s.hc_no = #{map.hcNo} </if>
+    <if test="map.hcName != null"> and s.hc_name = #{map.hcName} </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update stock

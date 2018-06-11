@@ -110,6 +110,12 @@
     from supplies
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByHcNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from supplies
+    where hc_no = #{hcNo,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from supplies
     where id = #{id,jdbcType=BIGINT}
