@@ -104,10 +104,7 @@
                     <a class="hp-tab-add" hp-href="/vendor/vendor" href="javascript:;">材料厂商维护</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="hp-tab-add" hp-href="" href="javascript:;">证件管理</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a class="hp-tab-add" hp-href="" href="javascript:;">合同管理</a>
+                    <a class="hp-tab-add" hp-href="/contract/contract" href="javascript:;">合同管理</a>
                 </li>
             </ul>
             <ul class="layui-nav layui-nav-tree" style="display: none" lay-filter="test">

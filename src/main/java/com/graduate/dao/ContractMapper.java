@@ -3,10 +3,13 @@ package com.graduate.dao;
 import com.graduate.model.Contract;
 import com.graduate.model.ContractExample;
 import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 public interface ContractMapper {
     int countByExample(ContractExample example);
+
+    int countByMap(@Param("map") Map<String,Object> map);
 
     int deleteByExample(ContractExample example);
 
@@ -16,7 +19,7 @@ public interface ContractMapper {
 
     int insertSelective(Contract record);
 
-    List<Contract> selectByExampleWithBLOBs(ContractExample example);
+    List<Contract> selectByMap(@Param("map") Map<String,Object> map);
 
     List<Contract> selectByExample(ContractExample example);
 

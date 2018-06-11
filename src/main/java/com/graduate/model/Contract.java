@@ -21,13 +21,13 @@ public class Contract {
 
     private Date endDate;
 
+    private String content;
+
     private Date createTime;
 
     private Date modifiedTime;
 
-    private String content;
-
-    public Contract(Long id, String cNo, String cName, Byte cType, String partyB, String bContacts, String phone, Date signedDate, Date endDate, Date createTime, Date modifiedTime, String content) {
+    public Contract(Long id, String cNo, String cName, Byte cType, String partyB, String bContacts, String phone, Date signedDate, Date endDate, String content, Date createTime, Date modifiedTime) {
         this.id = id;
         this.cNo = cNo;
         this.cName = cName;
@@ -37,9 +37,9 @@ public class Contract {
         this.phone = phone;
         this.signedDate = signedDate;
         this.endDate = endDate;
+        this.content = content;
         this.createTime = createTime;
         this.modifiedTime = modifiedTime;
-        this.content = content;
     }
 
     public Contract() {
@@ -118,6 +118,14 @@ public class Contract {
         this.endDate = endDate;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -132,13 +140,5 @@ public class Contract {
 
     public void setModifiedTime(Date modifiedTime) {
         this.modifiedTime = modifiedTime;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
     }
 }

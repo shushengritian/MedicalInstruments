@@ -12,24 +12,9 @@
       <arg column="phone" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="signed_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="end_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="content" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="modified_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-    </constructor>
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.graduate.model.Contract" >
-    <constructor >
-      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <arg column="c_no" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="c_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="c_type" jdbcType="TINYINT" javaType="java.lang.Byte" />
-      <arg column="party_b" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="b_contacts" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="phone" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="signed_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="end_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="modified_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -91,29 +76,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, c_no, c_name, c_type, party_b, b_contacts, phone, signed_date, end_date, create_time, 
-    modified_time
+    id, c_no, c_name, c_type, party_b, b_contacts, phone, signed_date, end_date, content,
+    create_time, modified_time
   </sql>
-  <sql id="Blob_Column_List" >
-    content
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.graduate.model.ContractExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from contract
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.graduate.model.ContractExample" >
     select
     <if test="distinct" >
@@ -129,11 +94,24 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
-    select 
+  <select id="selectByMap" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
+    from contract
+    where 1=1
+    <if test="map.id != null"> and id=#{map.id}</if>
+    <if test="map.partyB != null"> and party_b=#{map.partyB}</if>
+    <if test="map.cName != null"> and c_name=#{map.cName}</if>
+    <if test="map.cType != null"> and c_type=#{map.cType}</if>
+    <if test="map.startDate != null"> and signed_date &gt; #{map.startDate}</if>
+    <if test="map.endDate != null"> and signed_date &lt; #{map.endDate}</if>
+    <if test="map.startIndex != null">
+      limit #{map.startIndex},#{map.pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
     from contract
     where id = #{id,jdbcType=BIGINT}
   </select>
@@ -148,15 +126,15 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.graduate.model.Contract" >
-    insert into contract (id, c_no, c_name, 
-      c_type, party_b, b_contacts, 
-      phone, signed_date, end_date, 
-      create_time, modified_time, content
+    insert into contract (id, c_no, c_name,
+      c_type, party_b, b_contacts,
+      phone, signed_date, end_date,
+      content, create_time, modified_time
       )
-    values (#{id,jdbcType=BIGINT}, #{cNo,jdbcType=VARCHAR}, #{cName,jdbcType=VARCHAR}, 
-      #{cType,jdbcType=TINYINT}, #{partyB,jdbcType=VARCHAR}, #{bContacts,jdbcType=VARCHAR}, 
-      #{phone,jdbcType=VARCHAR}, #{signedDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
+    values (#{id,jdbcType=BIGINT}, #{cNo,jdbcType=VARCHAR}, #{cName,jdbcType=VARCHAR},
+      #{cType,jdbcType=TINYINT}, #{partyB,jdbcType=VARCHAR}, #{bContacts,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR}, #{signedDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP},
+      #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.graduate.model.Contract" >
@@ -189,14 +167,14 @@
       <if test="endDate != null" >
         end_date,
       </if>
+      <if test="content != null" >
+        content,
+      </if>
       <if test="createTime != null" >
         create_time,
       </if>
       <if test="modifiedTime != null" >
         modified_time,
-      </if>
-      <if test="content != null" >
-        content,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -227,14 +205,14 @@
       <if test="endDate != null" >
         #{endDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="modifiedTime != null" >
         #{modifiedTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -243,6 +221,16 @@
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
+  </select>
+
+  <select id="countByMap" parameterType="java.util.Map" resultType="java.lang.Integer" >
+    select count(*) from contract
+    where 1=1
+    <if test="map.partyB != null"> and party_b=#{map.partyB}</if>
+    <if test="map.cName != null"> and c_name=#{map.cName}</if>
+    <if test="map.cType != null"> and c_type=#{map.cType}</if>
+    <if test="map.startDate != null"> and signed_date &gt; #{map.startDate}</if>
+    <if test="map.endDate != null"> and signed_date &lt; #{map.endDate}</if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update contract
@@ -274,34 +262,16 @@
       <if test="record.endDate != null" >
         end_date = #{record.endDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
       <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.modifiedTime != null" >
         modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.content != null" >
-        content = #{record.content,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update contract
-    set id = #{record.id,jdbcType=BIGINT},
-      c_no = #{record.cNo,jdbcType=VARCHAR},
-      c_name = #{record.cName,jdbcType=VARCHAR},
-      c_type = #{record.cType,jdbcType=TINYINT},
-      party_b = #{record.partyB,jdbcType=VARCHAR},
-      b_contacts = #{record.bContacts,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR},
-      signed_date = #{record.signedDate,jdbcType=TIMESTAMP},
-      end_date = #{record.endDate,jdbcType=TIMESTAMP},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
-      content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -309,16 +279,17 @@
   <update id="updateByExample" parameterType="map" >
     update contract
     set id = #{record.id,jdbcType=BIGINT},
-      c_no = #{record.cNo,jdbcType=VARCHAR},
-      c_name = #{record.cName,jdbcType=VARCHAR},
-      c_type = #{record.cType,jdbcType=TINYINT},
-      party_b = #{record.partyB,jdbcType=VARCHAR},
-      b_contacts = #{record.bContacts,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR},
-      signed_date = #{record.signedDate,jdbcType=TIMESTAMP},
-      end_date = #{record.endDate,jdbcType=TIMESTAMP},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP}
+    c_no = #{record.cNo,jdbcType=VARCHAR},
+    c_name = #{record.cName,jdbcType=VARCHAR},
+    c_type = #{record.cType,jdbcType=TINYINT},
+    party_b = #{record.partyB,jdbcType=VARCHAR},
+    b_contacts = #{record.bContacts,jdbcType=VARCHAR},
+    phone = #{record.phone,jdbcType=VARCHAR},
+    signed_date = #{record.signedDate,jdbcType=TIMESTAMP},
+    end_date = #{record.endDate,jdbcType=TIMESTAMP},
+    content = #{record.content,jdbcType=VARCHAR},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP},
+    modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -350,31 +321,16 @@
       <if test="endDate != null" >
         end_date = #{endDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="modifiedTime != null" >
         modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.graduate.model.Contract" >
-    update contract
-    set c_no = #{cNo,jdbcType=VARCHAR},
-      c_name = #{cName,jdbcType=VARCHAR},
-      c_type = #{cType,jdbcType=TINYINT},
-      party_b = #{partyB,jdbcType=VARCHAR},
-      b_contacts = #{bContacts,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      signed_date = #{signedDate,jdbcType=TIMESTAMP},
-      end_date = #{endDate,jdbcType=TIMESTAMP},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
-      content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.graduate.model.Contract" >
@@ -387,6 +343,7 @@
       phone = #{phone,jdbcType=VARCHAR},
       signed_date = #{signedDate,jdbcType=TIMESTAMP},
       end_date = #{endDate,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

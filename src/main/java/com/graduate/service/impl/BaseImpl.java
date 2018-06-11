@@ -1,5 +1,7 @@
 package com.graduate.service.impl;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -8,6 +10,9 @@ import net.sf.json.JSONObject;
  * @date 2018/6/7 21:37
  */
 public class BaseImpl {
+
+    private Gson gson;
+
     public JSONObject selectResult(int count, JSONArray data){
         JSONObject obj = new JSONObject();
         if (count > 0) {
@@ -65,5 +70,13 @@ public class BaseImpl {
             obj.put("msg","删除失败！");
         }
         return obj;
+    }
+
+    public Gson getListGson() {
+        if (gson == null) {
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gson = gsonBuilder.setDateFormat("yyyy-MM-dd").create();
+        }
+        return gson;
     }
 }
