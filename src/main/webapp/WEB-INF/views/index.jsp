@@ -117,16 +117,10 @@
                 <li class="layui-nav-item">
                     <a class="hp-tab-add" hp-href="/stock/accessStock" href="javascript:;">器材出入库明细</a>
                 </li>
-                <li class="layui-nav-item">
-                    <a class="hp-tab-add" hp-href="" href="javascript:;">科室领用查询</a>
-                </li>
             </ul>
             <ul class="layui-nav layui-nav-tree" style="display: none" lay-filter="test">
                 <li class="layui-nav-item">
                     <a class="hp-tab-add" hp-href="" href="javascript:;">科室领用</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a class="hp-tab-add" hp-href="" href="javascript:;">科室使用</a>
                 </li>
                 <li class="layui-nav-item">
                     <a class="hp-tab-add" hp-href="" href="javascript:;">科室退库</a>
@@ -135,7 +129,7 @@
                     <a class="hp-tab-add" hp-href="" href="javascript:;">科室库存管理</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="hp-tab-add" hp-href="" href="javascript:;">使用记录</a>
+                    <a class="hp-tab-add" hp-href="" href="javascript:;">领用记录</a>
                 </li>
             </ul>
             <ul class="layui-nav layui-nav-tree" style="display: none" lay-filter="test">
@@ -181,7 +175,7 @@
                         </div>
                     </div>
                     <!-- 源码地址 -->
-                    <div style="margin-top: 10px;">
+                   <%-- <div style="margin-top: 10px;">
                         <blockquote class="layui-elem-quote">
                             源码地址：<br/><br/>
                             <a target="_blank" href="https://github.com/shushengritian"><button class="layui-btn layui-btn-danger  layui-btn-sm">github</button></a>
@@ -192,7 +186,7 @@
                             <b>qq群: 783549656</b>
                         </blockquote>
 
-                    </div>
+                    </div>--%>
 
                 </div>
             </div>
