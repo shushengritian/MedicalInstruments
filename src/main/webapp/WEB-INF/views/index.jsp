@@ -81,11 +81,11 @@
             <ul class="layui-nav hp-nav-none">
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="hp-user-name">
-                        <img src="<%=basePath%>/images/panda.png" class="layui-circle-img"><span class="hp-kd">西游却东行</span>
+                        <img src="<%=basePath%>/images/panda.png" class="layui-circle-img"><span class="hp-kd">${requestScope.userName}</span>
                     </a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="">基本资料</a>
+                            <a class="hp-tab-add" hp-href="/user/showUser" href="javascript:;">基本资料</a>
                         </dd>
                         <dd>
                             <a href="">安全设置</a>

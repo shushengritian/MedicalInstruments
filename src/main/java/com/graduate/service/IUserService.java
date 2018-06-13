@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.graduate.model.User;
 
 import javax.json.JsonObject;
+import java.util.List;
 
 /**
  * @author xiyouquedongxing
@@ -11,12 +12,6 @@ import javax.json.JsonObject;
  */
 public interface IUserService {
 
-    /**
-     * 查询用户信息
-     * @param userId 用户id
-     * @return User 用户实体类
-     */
-    User selectUser(long userId);
 
     /**
      * 用户登陆
@@ -24,5 +19,5 @@ public interface IUserService {
      * @param password 密码
      * @return boolean 查询结果
      * */
-    boolean login(String username, String password);
+    List<User> login(String username, String password);
 }
