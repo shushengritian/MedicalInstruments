@@ -1,6 +1,7 @@
 package com.graduate.service;
 
 import net.sf.json.JSONObject;
+import org.apache.commons.fileupload.FileItem;
 
 /**
  * @author xiyouquedongxing
@@ -25,4 +26,7 @@ public interface VendorService {
 
     /***/
     JSONObject delById(String id);
+
+    /***/
+    JSONObject uploadExcel(FileItem fi);
 }

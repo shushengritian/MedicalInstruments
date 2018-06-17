@@ -131,6 +131,15 @@
       #{vType,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
       #{modifiedTime,jdbcType=TIMESTAMP})
   </insert>
+  <insert id="insertBatch">
+    INSERT INTO vendor
+    (v_no, v_name, oibc, salesman, phone, status, create_time, modified_time)
+    VALUES
+    <foreach collection ="list" item="vendor" separator =",">
+      (#{vendor.vNo}, #{vendor.vName}, #{vendor.oibc}, #{vendor.salesman}, #{vendor.phone},
+      #{vendor.status}, #{vendor.createTime}, #{vendor.modifiedTime})
+    </foreach >
+  </insert>
   <insert id="insertSelective" parameterType="com.graduate.model.Vendor" >
     insert into vendor
     <trim prefix="(" suffix=")" suffixOverrides="," >

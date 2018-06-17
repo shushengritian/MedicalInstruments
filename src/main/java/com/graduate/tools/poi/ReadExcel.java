@@ -2,6 +2,7 @@ package com.graduate.tools.poi;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.fileupload.FileItem;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -40,7 +41,51 @@ public class ReadExcel {
     /**
      * 通用方法
      * 读取Excel表格，获取信息
-     * @param file Excel文件
+     * @param fi Excel文件
+     * @param dataBeginRows 有效数据开始行
+     * @param keyList 文件抬头字段集合
+     * @List Excel信息的集合
+     * */
+    public JSONArray getExcelInfo(FileItem fi, int dataBeginRows, List keyList) {
+        //创建返回集合
+        JSONArray array = new JSONArray();
+        //获取文件名字
+        String fileName = fi.getName();
+        //try catch 捕捉异常
+        try {
+            //通过文件获取I/O流
+            InputStream inputStream = fi.getInputStream();
+            //验证文件格式
+            if(!validateExcel(fileName)){
+                return null;
+            }
+            //根据文件名判断文件是2003版本还是2007版本
+            boolean isExcel2003 = true;
+            if (isExcel2007(fileName)) {
+                isExcel2003 = false;
+            }
+            //获取Excel表格内容
+            Workbook wb = null;
+            if (isExcel2003) {
+                // 当excel是2003时,创建excel2003
+                wb = new HSSFWorkbook(inputStream);
+            } else {
+                // 当excel是2007时,创建excel2007
+                wb = new XSSFWorkbook(inputStream);
+            }
+            // 读取Excel里面客户的信息
+            array = readExcelContent(wb,dataBeginRows,keyList);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return array;
+    }
+
+    /**
+     * 通用方法
+     * 读取Excel表格，获取信息
+     * @param file
      * @param dataBeginRows 有效数据开始行
      * @param keyList 文件抬头字段集合
      * @List Excel信息的集合
@@ -80,6 +125,7 @@ public class ReadExcel {
         }
         return array;
     }
+
 
 
     /**

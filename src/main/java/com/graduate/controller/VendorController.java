@@ -137,12 +137,10 @@ public class VendorController {
             Iterator<FileItem> i = items.iterator();
             while (i.hasNext()) {
                 FileItem fi = (FileItem) i.next();
-                String fileName = fi.getName();
-                if (fileName != null) {
-                    // 解决文件名乱码问题
-                    File savedFile = new File(uploadPath,fileName);
-                    fi.write(savedFile);
-                }
+                JSONObject result = vendorService.uploadExcel(fi);
+                response.getWriter().write(result.toString());
+                response.getWriter().flush();
+                response.getWriter().close();
             }
             System.out.print("上传成功！");
         } catch (Exception e) {

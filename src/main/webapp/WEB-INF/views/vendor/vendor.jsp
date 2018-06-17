@@ -300,11 +300,13 @@
                 });
             }
             ,done: function(res){
-                //如果上传失败
-                if(res.code > 0){
-                    return layer.msg('上传失败');
+                if (res.code == 1) {
+                    //上传成功
+                    layer.msg("上传成功");
+                } else {
+                    //上传失败
+                    layer.msg("上传失败");
                 }
-                //上传成功
             }
             ,error: function(){
                 //演示失败状态，并实现重传

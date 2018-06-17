@@ -19,6 +19,8 @@ public interface VendorMapper {
 
     int insert(Vendor record);
 
+    int insertBatch(List<Vendor> list);
+
     int insertSelective(Vendor record);
 
     List<Vendor> selectByExample(VendorExample example);
