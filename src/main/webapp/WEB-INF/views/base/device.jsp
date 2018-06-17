@@ -16,47 +16,49 @@
 </head>
 <body>
 <div style="height: 30px"></div>
-<div class="layui-form-item">
-    <div class="layui-inline">
-        <input type="text" name="id" id="id" placeholder="ID" autocomplete="off" class="layui-input">
+<form class="layui-form" action="#">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <input type="text" name="id" id="id" placeholder="ID" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-inline">
+            <input type="text" name="deviceNo" id="deviceNo" placeholder="设备编号" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-inline">
+            <input type="text" name="deviceName" id="deviceName" placeholder="设备名称" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-inline">
+            <input type="text" name="deviceType" id="deviceType" placeholder="设备类型" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-inline">
+            <select id="isMeasurement">
+                <option value="">是否计量设备</option>
+                <option value="1">是</option>
+                <option value="2">否</option>
+            </select>
+        </div>
+        <div class="layui-inline">
+            <select id="status">
+                <option value="">请选择科室状态</option>
+                <option value="1">启用</option>
+                <option value="2">停用</option>
+                <option value="3">废除</option>
+            </select>
+        </div>
+        <div class="layui-inline">
+            <button class="layui-btn" onclick="getTableDate(1)" id="searchBtn">
+                <i class="layui-icon">&#xe615;</i></button>
+            <button class="layui-btn" onclick="addBtn()"><i class="layui-icon"></i>添加</button>
+        </div>
     </div>
-    <div class="layui-inline">
-        <input type="text" name="deviceNo" id="deviceNo" placeholder="设备编号" autocomplete="off" class="layui-input">
-    </div>
-    <div class="layui-inline">
-        <input type="text" name="deviceName" id="deviceName" placeholder="设备名称" autocomplete="off" class="layui-input">
-    </div>
-    <div class="layui-inline">
-        <input type="text" name="deviceType" id="deviceType" placeholder="设备类型" autocomplete="off" class="layui-input">
-    </div>
-    <div class="layui-inline">
-        <select id="isMeasurement">
-            <option value="">是否计量设备</option>
-            <option value="1">是</option>
-            <option value="2">否</option>
-        </select>
-    </div>
-    <div class="layui-inline">
-        <select id="status">
-            <option value="">请选择科室状态</option>
-            <option value="1">启用</option>
-            <option value="2">停用</option>
-            <option value="3">废除</option>
-        </select>
-    </div>
-    <div class="layui-inline">
-        <button class="layui-btn" onclick="getTableDate(1)" id="searchBtn">
-            <i class="layui-icon">&#xe615;</i></button>
-        <button class="layui-btn" onclick="addBtn()"><i class="layui-icon"></i>添加</button>
-    </div>
-</div>
+</form>
 <table id="device" class="layui-table" lay-filter="test" >
     <thead>
     <th>ID</th>
     <th>设备编号</th>
     <th>设备名称</th>
     <th>单位</th>
-    <th>设备类型</th>
+    <%--<th>设备类型</th>--%>
     <th>计量设备</th>
     <th>状态</th>
     <th>操作</th>
@@ -64,7 +66,7 @@
     <tbody id="dataBody"></tbody>
 </table>
 <div id="pager"></div>
-<form id="infoForm" style="display: none;">
+<form id="infoForm" style="display: none;" action="#" class="layui-form">
     <div style="height: 30px"></div>
     <div class="layui-form-item">
         <div class="layui-inline">
@@ -173,8 +175,9 @@
             row.append('<td>'+ v.id +'</td>');
             row.append('<td>'+ v.deviceNo +'</td>');
             row.append('<td>'+ v.deviceName +'</td>');
-            row.append('<td>'+ v.unit +'</td>');
-            row.append('<td>'+ v.deviceType +'</td>');
+            var unit = getUnit(v.unit);
+            row.append('<td>'+ unit +'</td>');
+           /* row.append('<td>'+ v.deviceType +'</td>');*/
             var isMeasurement = v.isMeasurement;
             if ('1' == isMeasurement) {
                 isMeasurement = '是';
@@ -195,6 +198,27 @@
                 '<a class="layui-btn layui-btn-danger layui-btn-xs" onclick="del('+v.id+')" >删除</a></td>');
             $("#device").append(row);
         });
+    }
+    function getUnit(unitT) {
+        if ('1' == unitT) {
+            return '个';
+        } else if ('2' == unitT) {
+            return '包';
+        }else if ('3' == unitT) {
+            return '袋';
+        }else if ('4' == unitT) {
+            return '台';
+        }else if ('5' == unitT) {
+            return '箱';
+        }else if ('6' == unitT) {
+            return '条';
+        }else if ('7' == unitT) {
+            return '只';
+        }else if ('8' == unitT) {
+            return '瓶';
+        }else if ('9' == unitT) {
+            return '床';
+        }
     }
     function addBtn() {
         var index = layer.open({

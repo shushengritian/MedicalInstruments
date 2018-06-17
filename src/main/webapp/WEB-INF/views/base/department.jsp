@@ -16,33 +16,35 @@
 </head>
 <body>
 <div style="height: 30px"></div>
-<div class="layui-form-item">
-    <div class="layui-inline">
-        <input type="text" name="id" id="id" placeholder="ID" autocomplete="off" class="layui-input">
+<form class="layui-form" action="#">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <input type="text" name="id" id="id" placeholder="ID" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-inline">
+            <input type="text" name="number" id="number" placeholder="科室编号" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-inline">
+            <input type="text" name="name" id="name" placeholder="科室名称" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-inline">
+            <input type="text" name="landline" id="landline" placeholder="座机" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-inline">
+            <select id="status">
+                <option value="">请选择科室状态</option>
+                <option value="1">启用</option>
+                <option value="2">停用</option>
+                <option value="3">废除</option>
+            </select>
+        </div>
+        <div class="layui-inline">
+            <button class="layui-btn" onclick="getTableDate(1)" id="searchBtn">
+                <i class="layui-icon">&#xe615;</i></button>
+            <button class="layui-btn" onclick="addBtn()"><i class="layui-icon"></i>添加</button>
+        </div>
     </div>
-    <div class="layui-inline">
-        <input type="text" name="number" id="number" placeholder="科室编号" autocomplete="off" class="layui-input">
-    </div>
-    <div class="layui-inline">
-        <input type="text" name="name" id="name" placeholder="科室名称" autocomplete="off" class="layui-input">
-    </div>
-    <div class="layui-inline">
-        <input type="text" name="landline" id="landline" placeholder="座机" autocomplete="off" class="layui-input">
-    </div>
-    <div class="layui-inline">
-        <select id="status">
-            <option value="">请选择科室状态</option>
-            <option value="1">启用</option>
-            <option value="2">停用</option>
-            <option value="3">废除</option>
-        </select>
-    </div>
-    <div class="layui-inline">
-        <button class="layui-btn" onclick="getTableDate(1)" id="searchBtn">
-            <i class="layui-icon">&#xe615;</i></button>
-        <button class="layui-btn" onclick="addBtn()"><i class="layui-icon"></i>添加</button>
-    </div>
-</div>
+</form>
 <table id="department" class="layui-table" lay-filter="test" >
     <thead>
     <th>ID</th>
@@ -55,7 +57,7 @@
     <tbody id="dataBody"></tbody>
 </table>
 <div id="pager"></div>
-<form id="infoForm" style="display: none;">
+<form id="infoForm" style="display: none;" action="#" class="layui-form">
     <div style="height: 30px"></div>
     <div class="layui-form-item">
         <div class="layui-inline">
@@ -250,7 +252,7 @@
 
         //但是，如果你的HTML是动态生成的，自动渲染就会失效
         //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
-        form.render();
+        //form.render();
     });
 </script>
 </body>

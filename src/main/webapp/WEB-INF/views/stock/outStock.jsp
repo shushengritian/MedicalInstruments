@@ -40,7 +40,7 @@
     <tbody id="dataBody"></tbody>
 </table>
 <div id="pager"></div>
-<form id="infoForm" style="display: none;">
+<form id="infoForm" style="display: none;" class="layui-form" action="#">
     <div style="height: 30px"></div>
     <div class="layui-form-item">
         <div class="layui-inline">
@@ -55,6 +55,14 @@
             <label class="layui-form-label">出库数量</label>
             <div class="layui-input-inline">
                 <input type="text" id="number" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">领用科室</label>
+            <div class="layui-input-inline">
+                <input type="text" id="validDate" lay-verify="required" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -116,12 +124,34 @@
             row.append('<td>'+ v.hcName +'</td>');
             row.append('<td>'+ v.stock +'</td>');
             row.append('<td>'+ v.price +'</td>');
-            row.append('<td>'+ v.unit +'</td>');
+            var unit = getUnit(v.unit);
+            row.append('<td>'+ unit +'</td>');
             row.append('<td><a class="layui-btn layui-btn-xs" onclick="storage(\''+v.hcNo+'\')">出库</a></td>');
             $("#supplies").append(row);
         });
     }
 
+    function getUnit(unitT) {
+        if ('1' == unitT) {
+            return '个';
+        } else if ('2' == unitT) {
+            return '包';
+        }else if ('3' == unitT) {
+            return '袋';
+        }else if ('4' == unitT) {
+            return '台';
+        }else if ('5' == unitT) {
+            return '箱';
+        }else if ('6' == unitT) {
+            return '条';
+        }else if ('7' == unitT) {
+            return '只';
+        }else if ('8' == unitT) {
+            return '瓶';
+        }else if ('9' == unitT) {
+            return '床';
+        }
+    }
     function storage(hcNo) {
         var index = layer.open({
             title: "出库",
@@ -137,17 +167,28 @@
                     hcNo : hcNo,
                     singleNo : $('#singleNo').val(),
                     number : $('#number').val(),
-                    sType : $('#sType').val()
+                    sType : $('#sType').val(),
+                    validDate : $('#validDate').val()
                 },function (result) {
                     var res = JSON.parse(result);
-                    layer.msg(res.msg);
+                    console.log(res);
+                    if (res.kcs) {
+                        layer.msg(res.kcs,{
+                            icon: 1,
+                            time: 3000 //2秒关闭（如果不配置，默认是3秒）
+                        },function () {
+
+                        });
+                    } else {
+                        layer.msg(res.msg);
+                    }
                     layer.close(index);
                 });
             },
             end: function () {
                 setTimeout(function () {
                     getTableDate(1);
-                },2000);
+                },5000);
 
             }
         });

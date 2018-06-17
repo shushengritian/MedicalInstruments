@@ -137,7 +137,7 @@ public class DepartmentServiceImpl implements DepartmentService {
             department.setLandline(landline);
         }
         if (StringUtils.isNotBlank(status)) {
-            department.setStatus(status.getBytes()[0]);
+            department.setStatus(Byte.parseByte(status));
         }
         department.setModifiedTime(new Date());
         int res = departmentMapper.updateByExample(department, example);

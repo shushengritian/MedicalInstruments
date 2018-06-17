@@ -12,10 +12,10 @@ public interface StockService {
     JSONObject listSupplies(String hcNo, String hcName, String pageNo, String pageSize);
 
     /***/
-    JSONObject inStock(String hcNo, String singleNo, String number, String sType);
+    JSONObject inStock(String hcNo, String singleNo, String number, String sType, String validDate);
 
     /***/
-    JSONObject outStock(String hcNo, String singleNo, String number, String sType);
+    JSONObject outStock(String hcNo, String singleNo, String number, String sType, String validDate);
 
     /***/
     JSONObject listAccessStock(String startDate, String endDate, String hcName, String sType,

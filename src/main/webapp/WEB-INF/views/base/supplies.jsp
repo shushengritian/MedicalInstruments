@@ -21,10 +21,10 @@
         <input type="text" name="id" id="id" placeholder="ID" autocomplete="off" class="layui-input">
     </div>
     <div class="layui-inline">
-        <input type="text" name="hcNo" id="hcNo" placeholder="耗材编号" autocomplete="off" class="layui-input">
+        <input type="text" name="hcNo" id="hcNo" placeholder="器械编号" autocomplete="off" class="layui-input">
     </div>
     <div class="layui-inline">
-        <input type="text" name="hcName" id="hcName" placeholder="耗材名称" autocomplete="off" class="layui-input">
+        <input type="text" name="hcName" id="hcName" placeholder="器械名称" autocomplete="off" class="layui-input">
     </div>
     <div class="layui-inline">
         <input type="text" name="manafacturer" id="manafacturer" placeholder="生产厂家" autocomplete="off" class="layui-input">
@@ -38,10 +38,10 @@
 <table id="device" class="layui-table" lay-filter="test" >
     <thead>
     <th>ID</th>
-    <th>耗材编号</th>
-    <th>耗材名称</th>
+    <th>器械编号</th>
+    <th>器械名称</th>
     <th>生产厂家</th>
-    <th>规格型号</th>
+    <th>器械类型</th>
     <th>单位</th>
     <th>入库价格</th>
     <th>操作</th>
@@ -49,11 +49,11 @@
     <tbody id="dataBody"></tbody>
 </table>
 <div id="pager"></div>
-<form id="infoForm" style="display: none;">
+<form id="infoForm" style="display: none;" class="layui-form" action="#">
     <div style="height: 30px"></div>
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">耗材编号</label>
+            <label class="layui-form-label">器械编号</label>
             <div class="layui-input-inline">
                 <input type="text" id="hcNoF" lay-verify="required" autocomplete="off" class="layui-input">
             </div>
@@ -61,7 +61,7 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">耗材名称</label>
+            <label class="layui-form-label">器械名称</label>
             <div class="layui-input-inline">
                 <input type="text" id="hcNameF" lay-verify="required" autocomplete="off" class="layui-input">
             </div>
@@ -79,15 +79,31 @@
         <div class="layui-inline">
             <label class="layui-form-label">单位</label>
             <div class="layui-input-inline">
-                <input type="text" id="unitF" lay-verify="required" autocomplete="off" class="layui-input">
+                <select id="unitF">
+                    <option value="">请选择</option>
+                    <option value="1">个</option>
+                    <option value="2">包</option>
+                    <option value="3">袋</option>
+                    <option value="4">台</option>
+                    <option value="5">箱</option>
+                    <option value="6">条</option>
+                    <option value="7">只</option>
+                    <option value="8">瓶</option>
+                    <option value="9">床</option>
+                </select>
             </div>
         </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">规格型号</label>
+            <label class="layui-form-label">器械类型</label>
             <div class="layui-input-inline">
-                <input type="text" id="hcTypeF" lay-verify="required" autocomplete="off" class="layui-input">
+                <select id="hcTypeF">
+                    <option value="">请选择</option>
+                    <option value="1">一类器械</option>
+                    <option value="2">二类器械</option>
+                    <option value="3">三类器械</option>
+                </select>
             </div>
         </div>
     </div>
@@ -149,17 +165,48 @@
             row.append('<td>'+ v.hcNo +'</td>');
             row.append('<td>'+ v.hcName +'</td>');
             row.append('<td>'+ v.manafacturer +'</td>');
-            row.append('<td>'+ v.hcType +'</td>');
-            row.append('<td>'+ v.unit +'</td>');
+            var hcType = v.hcType;
+            if (hcType == '1') {
+                hcType = '一类器械';
+            } else if (hcType == '2') {
+                hcType = '二类器械';
+            } else if (hcType == '3') {
+                hcType = '三类器械';
+            }
+            row.append('<td>'+ hcType +'</td>');
+            var unit = getUnit(v.unit);
+            row.append('<td>'+ unit +'</td>');
             row.append('<td>'+ v.price +'</td>');
             row.append('<td><a class="layui-btn layui-btn-xs" onclick="edit('+v.id+')">编辑</a>' +
                 '<a class="layui-btn layui-btn-danger layui-btn-xs" onclick="del('+v.id+')" >删除</a></td>');
             $("#device").append(row);
         });
     }
+
+    function getUnit(unitT) {
+        if ('1' == unitT) {
+            return '个';
+        } else if ('2' == unitT) {
+            return '包';
+        }else if ('3' == unitT) {
+            return '袋';
+        }else if ('4' == unitT) {
+            return '台';
+        }else if ('5' == unitT) {
+            return '箱';
+        }else if ('6' == unitT) {
+            return '条';
+        }else if ('7' == unitT) {
+            return '只';
+        }else if ('8' == unitT) {
+            return '瓶';
+        }else if ('9' == unitT) {
+            return '床';
+        }
+    }
     function addBtn() {
         var index = layer.open({
-            title: "添加耗材",
+            title: "添加器械",
             type: 1, //page层
             area: ['340px', '400px'],
             shade: 0.6, //遮罩透明度
@@ -201,7 +248,7 @@
             }
         });
         var index = layer.open({
-            title: "编辑耗材信息",
+            title: "编辑器械信息",
             type: 1, //page层
             area: ['340px', '400px'],
             shade: 0.6, //遮罩透明度

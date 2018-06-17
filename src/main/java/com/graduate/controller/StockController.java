@@ -59,7 +59,8 @@ public class StockController {
         String singleNo = request.getParameter("singleNo");
         String number = request.getParameter("number");
         String sType = request.getParameter("sType");
-        JSONObject result = stockService.inStock(hcNo, singleNo, number, sType);
+        String validDate = request.getParameter("validDate");
+        JSONObject result = stockService.inStock(hcNo, singleNo, number, sType, validDate);
         response.getWriter().write(result.toString());
         response.getWriter().flush();
         response.getWriter().close();
@@ -73,7 +74,8 @@ public class StockController {
         String singleNo = request.getParameter("singleNo");
         String number = request.getParameter("number");
         String sType = request.getParameter("sType");
-        JSONObject result = stockService.outStock(hcNo, singleNo, number, sType);
+        String validDate = request.getParameter("validDate");
+        JSONObject result = stockService.outStock(hcNo, singleNo, number, sType, validDate);
         response.getWriter().write(result.toString());
         response.getWriter().flush();
         response.getWriter().close();

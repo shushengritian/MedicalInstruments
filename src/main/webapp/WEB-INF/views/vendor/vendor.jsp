@@ -16,33 +16,36 @@
 </head>
 <body>
 <div style="height: 30px"></div>
-<div class="layui-form-item">
-    <div class="layui-inline">
-        <input type="text" name="id" id="id" placeholder="ID" autocomplete="off" class="layui-input">
+<form class="layui-form" action="#">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <input type="text" name="id" id="id" placeholder="ID" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-inline">
+            <input type="text" name="vName" id="vName" placeholder="厂商名称" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-inline">
+            <input type="text" name="oibc" id="oibc" placeholder="机构代码" autocomplete="off" class="layui-input">
+        </div>
+        <%--<div class="layui-inline">
+            <input type="text" name="vType" id="vType" placeholder="厂商类型" autocomplete="off" class="layui-input">
+        </div>--%>
+        <div class="layui-inline">
+            <select id="status">
+                <option value="">请选择厂商状态</option>
+                <option value="1">启用</option>
+                <option value="2">停用</option>
+                <option value="3">废除</option>
+            </select>
+        </div>
+        <div class="layui-inline">
+            <button class="layui-btn" onclick="getTableDate(1)" id="searchBtn">
+                <i class="layui-icon">&#xe615;</i></button>
+            <button class="layui-btn" onclick="addBtn()"><i class="layui-icon"></i>添加</button>
+            <button type="button" class="layui-btn" id="upload"><i class="layui-icon"></i>导入Excel</button>
+        </div>
     </div>
-    <div class="layui-inline">
-        <input type="text" name="vName" id="vName" placeholder="厂商名称" autocomplete="off" class="layui-input">
-    </div>
-    <div class="layui-inline">
-        <input type="text" name="oibc" id="oibc" placeholder="机构代码" autocomplete="off" class="layui-input">
-    </div>
-    <div class="layui-inline">
-        <input type="text" name="vType" id="vType" placeholder="厂商类型" autocomplete="off" class="layui-input">
-    </div>
-    <div class="layui-inline">
-        <select id="status">
-            <option value="">请选择厂商状态</option>
-            <option value="1">启用</option>
-            <option value="2">停用</option>
-            <option value="3">废除</option>
-        </select>
-    </div>
-    <div class="layui-inline">
-        <button class="layui-btn" onclick="getTableDate(1)" id="searchBtn">
-            <i class="layui-icon">&#xe615;</i></button>
-        <button class="layui-btn" onclick="addBtn()"><i class="layui-icon"></i>添加</button>
-    </div>
-</div>
+</form>
 <table id="vendor" class="layui-table" lay-filter="test" >
     <thead>
     <th>ID</th>
@@ -51,14 +54,14 @@
     <th>组织机构代码</th>
     <th>业务联系人</th>
     <th>联系人电话</th>
-    <th>厂商类型</th>
+    <%--<th>厂商类型</th>--%>
     <th>状态</th>
     <th>操作</th>
     </thead>
     <tbody id="dataBody"></tbody>
 </table>
 <div id="pager"></div>
-<form id="infoForm" style="display: none;">
+<form id="infoForm" style="display: none;" class="layui-form" action="#">
     <div style="height: 30px"></div>
     <div class="layui-form-item">
         <div class="layui-inline">
@@ -100,14 +103,14 @@
             </div>
         </div>
     </div>
-    <div class="layui-form-item">
+    <%--<div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">厂商类型</label>
             <div class="layui-input-inline">
                 <input type="text" id="vTypeF" lay-verify="required" autocomplete="off" class="layui-input">
             </div>
         </div>
-    </div>
+    </div>--%>
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">状态</label>
@@ -172,7 +175,7 @@
            row.append('<td>'+ v.oibc +'</td>');
            row.append('<td>'+ v.salesman +'</td>');
            row.append('<td>'+ v.phone +'</td>');
-           row.append('<td>'+ v.vType +'</td>');
+           /*row.append('<td>'+ v.vType +'</td>');*/
            var status = v.status;
            if ('1' == status) {
                status = '启用';
@@ -281,8 +284,37 @@
            });
        });
    }
-    layui.use('form', function(){
-        var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+    layui.use(['form','upload'], function(){
+        var form = layui.form
+            ,upload = layui.upload;
+
+        //文件上传
+        upload.render({
+            elem: '#upload'
+            ,url: '/vendor/upload'
+            ,accept: 'file' //普通文件
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code > 0){
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
 
         //……
 

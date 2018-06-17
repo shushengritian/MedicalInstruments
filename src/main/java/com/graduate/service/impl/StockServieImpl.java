@@ -60,7 +60,7 @@ public class StockServieImpl extends BaseImpl implements StockService {
     }
 
     @Override
-    public JSONObject inStock(String hcNo, String singleNo, String number, String sType) {
+    public JSONObject inStock(String hcNo, String singleNo, String number, String sType, String validDate) {
         //入库操作，查询库存
         Supplies supplies = suppliesMapper.selectByHcNo(hcNo);
         AccessStock accessStock = new AccessStock();
@@ -72,6 +72,7 @@ public class StockServieImpl extends BaseImpl implements StockService {
         BigDecimal amount = numberL.multiply(supplies.getPrice());
         accessStock.setAmount(amount);
         accessStock.setInOrOut((byte)1);
+        accessStock.setValidDate(validDate);
         accessStock.setCreateTime(new Date());
         accessStock.setModifiedTime(new Date());
         int ai = accessStockMapper.insert(accessStock);
@@ -93,7 +94,7 @@ public class StockServieImpl extends BaseImpl implements StockService {
     }
 
     @Override
-    public JSONObject outStock(String hcNo, String singleNo, String number, String sType) {
+    public JSONObject outStock(String hcNo, String singleNo, String number, String sType, String validDate) {
         //出库操作，查询库存
         stock = stockMapper.selectByHcNo(hcNo);
         int num = stock.getStock() - Integer.parseInt(number);
@@ -101,6 +102,7 @@ public class StockServieImpl extends BaseImpl implements StockService {
             JSONObject obj = new JSONObject();
             obj.put("code","0");
             obj.put("msg","库存不足！");
+            return obj;
         }
         stock.setStock(num);
         stock.setModifiedTime(new Date());
@@ -116,10 +118,15 @@ public class StockServieImpl extends BaseImpl implements StockService {
         BigDecimal amount = numberL.multiply(supplies.getPrice());
         accessStock.setAmount(amount);
         accessStock.setInOrOut((byte)2);
+        accessStock.setValidDate(validDate);
         accessStock.setCreateTime(new Date());
         accessStock.setModifiedTime(new Date());
         int ai = accessStockMapper.insert(accessStock);
-        return aiAndSi(ai, si);
+        JSONObject res = aiAndSi(ai, si);
+        if (num < 100 && res.getString("code").equals("1") ) {
+            res.put("kcs","出库成功，剩余库存不足100，请注意！");
+        }
+        return res;
     }
 
     @Override

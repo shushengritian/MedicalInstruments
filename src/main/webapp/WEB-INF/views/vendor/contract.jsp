@@ -13,6 +13,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="<%=basePath%>/layui/css/layui.css">
 <link rel="stylesheet" href="<%=basePath%>/js/jquery/pager/pager.css" />
+<style>
+    .layui-form-label{
+        width: auto;
+    }
+</style>
 </head>
 <body>
 <div style="height: 30px"></div>
@@ -31,13 +36,14 @@
         <div class="layui-input-inline">
             <input type="text" class="layui-input" id="startDate" placeholder="yyyy-MM-dd">
         </div>
-    </div>
-    <div class="layui-inline">
         <label class="layui-form-label">至</label>
         <div class="layui-input-inline">
             <input type="text" class="layui-input" id="endDate" placeholder="yyyy-MM-dd">
         </div>
     </div>
+    <%--<div class="layui-inline">
+
+    </div>--%>
     <div class="layui-inline">
         <button class="layui-btn" onclick="getTableDate(1)" id="searchBtn">
             <i class="layui-icon">&#xe615;</i></button>

@@ -13,6 +13,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="<%=basePath%>/layui/css/layui.css">
 <link rel="stylesheet" href="<%=basePath%>/js/jquery/pager/pager.css" />
+<style>
+    .layui-form-label{
+        width: auto;
+    }
+</style>
 </head>
 <body>
 <div style="height: 30px"></div>
@@ -23,8 +28,6 @@
         <div class="layui-input-inline">
             <input type="text" class="layui-input" id="startDate" placeholder="yyyy-MM-dd">
         </div>
-    </div>
-    <div class="layui-inline">
         <label class="layui-form-label">至</label>
         <div class="layui-input-inline">
             <input type="text" class="layui-input" id="endDate" placeholder="yyyy-MM-dd">
@@ -46,6 +49,7 @@
     <th>日期</th>
     <th>单号</th>
     <th>类型</th>
+    <th>对方单位</th>
     <th>耗材编号</th>
     <th>耗材名称</th>
     <th>单位</th>
@@ -101,15 +105,49 @@
             var row = $('<tr></tr>');
             row.append('<td>'+ v.createTime +'</td>');
             row.append('<td>'+ v.singleNo +'</td>');
-            row.append('<td>'+ v.sType +'</td>');
+            var sType = v.sType;
+            if ('1' == sType) {
+                sType = '购买入库';
+            } else if ('2' == sType) {
+                sType = '退回入库';
+            } else if ('3' == sType) {
+                sType = '领用出库';
+            } else if ('4' == sType) {
+                sType = '其他出库';
+            }
+            row.append('<td>'+ sType +'</td>');
+            row.append('<td>'+ v.validDate +'</td>');
             row.append('<td>'+ v.hcNo +'</td>');
             row.append('<td>'+ v.hcName +'</td>');
-            row.append('<td>'+ v.unit +'</td>');
+            var unit = getUnit(v.unit);
+            row.append('<td>'+ unit +'</td>');
             row.append('<td>'+ v.price +'</td>');
             row.append('<td>'+ v.number +'</td>');
             row.append('<td>'+ v.amount +'</td>');
             $("#accessStock").append(row);
         });
+    }
+
+    function getUnit(unitT) {
+        if ('1' == unitT) {
+            return '个';
+        } else if ('2' == unitT) {
+            return '包';
+        }else if ('3' == unitT) {
+            return '袋';
+        }else if ('4' == unitT) {
+            return '台';
+        }else if ('5' == unitT) {
+            return '箱';
+        }else if ('6' == unitT) {
+            return '条';
+        }else if ('7' == unitT) {
+            return '只';
+        }else if ('8' == unitT) {
+            return '瓶';
+        }else if ('9' == unitT) {
+            return '床';
+        }
     }
     layui.use(['form','laydate'], function(){
         var form = layui.form

@@ -33,9 +33,9 @@
             <li class="layui-nav-item level-nav">
                 <a href="#">库存管理</a>
             </li>
-            <li class="layui-nav-item level-nav">
+            <%--<li class="layui-nav-item level-nav">
                 <a href="#">科室耗材管理</a>
-            </li>
+            </li>--%>
             <li class="layui-nav-item level-nav">
                 <a href="#">基础设置</a>
             </li>
@@ -118,7 +118,7 @@
                     <a class="hp-tab-add" hp-href="/stock/accessStock" href="javascript:;">器材出入库明细</a>
                 </li>
             </ul>
-            <ul class="layui-nav layui-nav-tree" style="display: none" lay-filter="test">
+            <%--<ul class="layui-nav layui-nav-tree" style="display: none" lay-filter="test">
                 <li class="layui-nav-item">
                     <a class="hp-tab-add" hp-href="" href="javascript:;">科室领用</a>
                 </li>
@@ -131,7 +131,7 @@
                 <li class="layui-nav-item">
                     <a class="hp-tab-add" hp-href="" href="javascript:;">领用记录</a>
                 </li>
-            </ul>
+            </ul>--%>
             <ul class="layui-nav layui-nav-tree" style="display: none" lay-filter="test">
                 <li class="layui-nav-item">
                     <a class="hp-tab-add" hp-href="/department/department" href="javascript:;">科室管理</a>
@@ -140,7 +140,7 @@
                     <a class="hp-tab-add" hp-href="/device/device" href="javascript:;">设备维护</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="hp-tab-add" hp-href="/supplies/supplies" href="javascript:;">耗材维护</a>
+                    <a class="hp-tab-add" hp-href="/supplies/supplies" href="javascript:;">器材维护</a>
                 </li>
             </ul>
 

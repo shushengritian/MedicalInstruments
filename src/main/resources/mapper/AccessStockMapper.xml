@@ -102,6 +102,7 @@
     <if test="map.startDate != null"> and a.create_time &gt; #{map.startDate}</if>
     <if test="map.endDate != null"> and a.create_time &lt; #{map.endDate}</if>
     <if test="map.sType != null"> and a.s_type = #{map.sType}</if>
+    order by a.modified_time desc
     <if test="map.startIndex != null">
       limit #{map.startIndex},#{map.pageSize}
     </if>
