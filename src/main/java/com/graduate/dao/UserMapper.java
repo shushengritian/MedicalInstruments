@@ -28,6 +28,10 @@ public interface UserMapper {
 
     int updateByExample(@Param("record") User record, @Param("example") UserExample example);
 
+    int updateByMap(@Param("map") Map<String,Object> map);
+
+    int updateInfoByMap(@Param("map") Map<String,Object> map);
+
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);

@@ -264,6 +264,15 @@
             <include refid="Update_By_Example_Where_Clause" />
         </if>
     </update>
+    <update id="updateByMap" parameterType="java.util.Map">
+        update user set password = #{map.newPassword} , modified_time = #{map.modifiedTime}
+        where login_account = #{map.loginAccount}
+    </update>
+    <update id="updateInfoByMap" parameterType="java.util.Map">
+        update user set user_name = #{map.userName}, mobile = #{map.phone},
+        email = #{map.email},  modified_time = #{map.modifiedTime}
+        where id = #{map.id}
+    </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.graduate.model.User" >
         update user
         <set >

@@ -88,7 +88,7 @@
                             <a class="hp-tab-add" hp-href="/user/showUser" href="javascript:;">基本资料</a>
                         </dd>
                         <dd>
-                            <a href="">安全设置</a>
+                            <a class="hp-tab-add" hp-href="/user/resetPassword" href="javascript:;">安全设置</a>
                         </dd>
                     </dl>
                 </li>

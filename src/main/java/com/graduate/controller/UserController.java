@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.graduate.model.User;
 import com.graduate.service.IUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,17 +48,84 @@ public class UserController {
         }
     }
 
+    @RequestMapping("/newLogin")
+    public String newLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        return "login";
+    }
+    @RequestMapping("/getUser")
+    public void getUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+        String loginAccount = (String)session.getAttribute("username");
+        String password = (String)session.getAttribute("password");
+        JSONObject result = new JSONObject();
+        result.put("code","1");
+        result.put("loginAccount",loginAccount);
+        result.put("password",password);
+        response.getWriter().write(result.toString());
+        response.getWriter().flush();
+        response.getWriter().close();
+
+    }
+
     @RequestMapping("/showUser")
     public String selectUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        return "/info/basicInfo";
+    }
+
+    @RequestMapping("/resetPassword")
+    public String resetPassword(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        return "/info/resetPassword";
+    }
+
+    @RequestMapping("/updatePassword")
+    public void updatePassword(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        String loginAccount = request.getParameter("loginAccount");
+        String oldPassword = request.getParameter("oldPassword");
+        String newPassword = request.getParameter("newPassword");
+        JSONObject result = userService.updatePassword(loginAccount, oldPassword, newPassword, "1");
+        response.getWriter().write(result.toString());
+        response.getWriter().flush();
+        response.getWriter().close();
+    }
+
+    @RequestMapping("/updateUserInfo")
+    public void updateUserInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        String userName = request.getParameter("userName");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+        String id = request.getParameter("id");
+        JSONObject result = userService.updateUserInfo(userName, phone, email, id);
+        response.getWriter().write(result.toString());
+        response.getWriter().flush();
+        response.getWriter().close();
+    }
+
+    @RequestMapping("/getUserInfo")
+    public void getUserInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("username");
         String password = (String)session.getAttribute("password");
-        System.out.println("用户名："+username+"---------密码："+password);
-        return "register";
-    }
 
+        JSONObject result = userService.getUserInfo(username, password);
+        response.getWriter().write(result.toString());
+        response.getWriter().flush();
+        response.getWriter().close();
+
+    }
     @RequestMapping("/getExternalOrderId")
     public void getExternalOrderId(HttpServletRequest request,HttpServletResponse response){
         try {
