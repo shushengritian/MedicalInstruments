@@ -136,6 +136,15 @@
       #{price,jdbcType=DECIMAL}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
       #{modifiedTime,jdbcType=TIMESTAMP})
   </insert>
+  <insert id="insertBatch">
+    INSERT INTO supplies
+    (hc_no, hc_name, manafacturer, hc_type, unit, price, create_time, modified_time)
+    VALUES
+    <foreach collection ="list" item="supplies" separator =",">
+      (#{supplies.hcNo}, #{supplies.hcName}, #{supplies.manafacturer}, #{supplies.hcType},
+      #{supplies.unit}, #{supplies.price}, #{supplies.createTime}, #{supplies.modifiedTime})
+    </foreach >
+  </insert>
   <insert id="insertSelective" parameterType="com.graduate.model.Supplies" >
     insert into supplies
     <trim prefix="(" suffix=")" suffixOverrides="," >

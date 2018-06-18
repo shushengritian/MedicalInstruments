@@ -33,6 +33,7 @@
         <button class="layui-btn" onclick="getTableDate(1)" id="searchBtn">
             <i class="layui-icon">&#xe615;</i></button>
         <button class="layui-btn" onclick="addBtn()"><i class="layui-icon"></i>添加</button>
+        <button type="button" class="layui-btn" id="upload"><i class="layui-icon"></i>导入Excel</button>
     </div>
 </div>
 <table id="device" class="layui-table" lay-filter="test" >
@@ -295,8 +296,33 @@
             });
         });
     }
-    layui.use('form', function(){
-        var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+    layui.use(['form','upload'], function(){
+        var form = layui.form
+            ,upload = layui.upload;
+
+        //文件上传
+        upload.render({
+            elem: '#upload'
+            ,url: '/supplies/upload'
+            ,accept: 'file' //普通文件
+            ,done: function(res){
+                if (res.code == 1) {
+                    //上传成功
+                    layer.msg("上传成功");
+                } else {
+                    //上传失败
+                    layer.msg("上传失败");
+                }
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
 
         //……
 

@@ -19,6 +19,8 @@ public interface SuppliesMapper {
 
     int insert(Supplies record);
 
+    int insertBatch(List<Supplies> list);
+
     int insertSelective(Supplies record);
 
     List<Supplies> selectByExample(SuppliesExample example);
